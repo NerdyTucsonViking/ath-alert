@@ -8,19 +8,19 @@ android {
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.nerdyviking.athalert"
-        minSdk = 26
-        targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+    applicationId = "com.nerdyviking.athalert"
+    minSdk = 26
+    targetSdk = 35
+    versionCode = 1
+    versionName = "1.0.0"
 
-        buildConfigField("String", "CMC_API_KEY", "\"525d8de5b5824978a84debbdfe4fbd03"")
+    buildConfigField("String", "CMC_API_KEY", "\"525d8de5b5824978a84debbdfe4fbd03\"")
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    vectorDrawables {
+        useSupportLibrary = true
     }
+}
 
     buildTypes {
         release {
