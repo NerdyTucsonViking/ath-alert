@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 private val Context.dataStore by preferencesDataStore(name = "ath_alert_prefs")
 
 data class AppPrefs(
-    val coinId: String = "bitcoin",
+    val coinId: String = "BTC",
     val coinLabel: String = "Bitcoin",
     val notificationsEnabled: Boolean = true,
     val initializedAth: Double = 0.0,
@@ -36,7 +36,7 @@ class PrefsRepository(private val context: Context) {
 
     val prefsFlow: Flow<AppPrefs> = context.dataStore.data.map { prefs ->
         AppPrefs(
-            coinId = prefs[Keys.COIN_ID] ?: "bitcoin",
+            coinId = prefs[Keys.COIN_ID] ?: "BTC",
             coinLabel = prefs[Keys.COIN_LABEL] ?: "Bitcoin",
             notificationsEnabled = prefs[Keys.NOTIFICATIONS_ENABLED] ?: true,
             initializedAth = prefs[Keys.INITIALIZED_ATH] ?: 0.0,
@@ -47,12 +47,13 @@ class PrefsRepository(private val context: Context) {
     }
 
     suspend fun saveCoin(coinId: String, label: String) {
-        context.dataStore.edit {
-            it[Keys.COIN_ID] = coinId.trim().lowercase()
-            it[Keys.COIN_LABEL] = label.trim().ifBlank { coinId.trim() }
-            it[Keys.LAST_STATUS] = "Saved ${label.ifBlank { coinId }}. Tap Start Tracking."
-        }
+    val cleanedSymbol = coinId.trim().uppercase()
+    context.dataStore.edit {
+        it[Keys.COIN_ID] = cleanedSymbol
+        it[Keys.COIN_LABEL] = label.trim().ifBlank { cleanedSymbol }
+        it[Keys.LAST_STATUS] = "Saved ${label.ifBlank { cleanedSymbol }}. Tap Start Tracking."
     }
+}
 
     suspend fun setNotificationsEnabled(enabled: Boolean) {
         context.dataStore.edit {
